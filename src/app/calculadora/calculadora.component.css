@@ -4,7 +4,8 @@
   background-color: #f6f8d8; }
 
 /*pantalla de visualización: bordes, posición, color de fondo, estilo letra.*/
-#textoPantalla { width: 185px; border: 2px black solid; text-align: right;
+#textoPantalla, #textoPantalla2 {
+    width: 185px; border: 2px black solid; text-align: right;
     position: relative; left: 23px;  padding: 0px 5px;
     background-color: white; font-family: "courier new";
     overflow: hidden;}
