@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
+import { DinamicosComponent } from './dinamicos/dinamicos.component';
+import { PersonasComponent } from './personas/personas.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { CalculadoraComponent } from './calculadora/calculadora.component';
     DemoComponent,
     PopUpComponent,
     CalculadoraComponent,
+    DinamicosComponent,
+    PersonasComponent,
   ],
   imports: [
     BrowserModule, FormsModule,
