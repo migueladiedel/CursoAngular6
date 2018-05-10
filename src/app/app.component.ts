@@ -6,12 +6,12 @@ import { NotifyService } from './services/notify.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  title = 'Prueba Aplicacion';
-
+export class AppComponent /*implements OnInit*/ {
+/*
   constructor(private ns: NotifyService) {
   }
   ngOnInit(): void {
     this.ns.add('Demo error en AppComponent');
   }
+  */
 }
