@@ -1,0 +1,44 @@
+<form #miForm="ngForm">
+  <dl>
+    <dt [class.errorMsg]="id.invalid">Código:</dt>
+    <dd>
+      <input type="number" name="id" id="id" [(ngModel)]="VM.Elemento.id" #id="ngModel" required>
+      <span class="errorMsg" [hidden]="id.hasError('required') && miForm.pristine">Es obligatorio.</span>
+    </dd>
+    <dt [class.errorMsg]="titulo.invalid">Titulo:</dt>
+    <dd>
+        <input type="text" name="titulo" id="titulo" [(ngModel)]="VM.Elemento.titulo" #titulo="ngModel"
+        required minlength="2" maxlength="10">
+        <span class="errorMsg" [hidden]="!titulo.errors?.required && miForm.pristine">Es obligatorio.</span>
+        <span class="errorMsg" [hidden]="!titulo.errors?.minlength && !titulo.errors?.maxlength">Debe de tener entre 2 y 10 caracteres.</span>
+    </dd>
+    <dt [class.errorMsg]="texto.invalid">Texto:</dt>
+    <dd>
+        <input type="text" name="texto" id="texto" [(ngModel)]="VM.Elemento.texto" #texto="ngModel"
+        minlength="2" maxlength="10">
+        <span class="errorMsg" [hidden]="!texto.errors?.minlength && !texto.errors?.maxlength">Debe de tener entre 2 y 10 caracteres.</span>
+    </dd>
+    <dt [class.errorMsg]="fecha.invalid">Texto:</dt>
+    <dd>
+        <input type="date" name="fecha" id="fecha" [(ngModel)]="VM.Elemento.fecha" #texto="ngModel"
+        minlength="2" maxlength="10">
+        <span class="errorMsg" [hidden]="!fecha.errors?.minlength && !fecha.errors?.maxlength">Debe de tener entre 2 y 10 caracteres.</span>
+    </dd>
+    <dt [class.errorMsg]="megusta.invalid">Edad:</dt>
+    <dd>
+        <input type="number" name="megusta" id="megusta" [(ngModel)]="VM.Elemento.megusta" #megusta="ngModel"
+        minlength="18" maxlength="67">
+        <span class="errorMsg" [hidden]="!megusta.errors?.minlength && !megusta.errors?.maxlength">Debe de tener entre 18 y 67 años.</span>
+    </dd>
+    <dt [class.errorMsg]="fotoUrl.invalid">Edad:</dt>
+    <dd>
+        <input type="number" name="fotoUrl" id="fotoUrl" [(ngModel)]="VM.Elemento.fotoUrl" #megusta="ngModel"
+        minlength="18" maxlength="67">
+        <span class="errorMsg" [hidden]="!fotoUrl.errors?.minlength && !fotoUrl.errors?.maxlength">Debe de tener entre 18 y 67 años.</span>
+    </dd>
+  </dl>
+  <p>
+    <input type="button" value="Enviar" (click)="VM.send()" [disabled]="miForm.invalid">
+    <input type="button" value="Volver" (click)="VM.cancel()">
+  </p>
+</form>

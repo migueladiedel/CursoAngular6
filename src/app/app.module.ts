@@ -10,6 +10,9 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { DinamicosComponent } from './dinamicos/dinamicos.component';
 import { PERSONAS_COMPONENT } from './personas/personas.component';
+import { PersonasVMService } from './personas/personas-vm.service';
+import { BLOB_COMPONENT } from './blob/blob.component';
+import { BlobVMService } from './blob/blob-vm.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +23,18 @@ import { PERSONAS_COMPONENT } from './personas/personas.component';
     CalculadoraComponent,
     DinamicosComponent,
     PERSONAS_COMPONENT,
+    BLOB_COMPONENT
+
   ],
   imports: [
     BrowserModule, FormsModule,
-    AgioCoreModule
+    AgioCoreModule,
   ],
   providers: [
     LoggerService,
     {provide: ERROR_LEVEL, useValue: 4 },
+    PersonasVMService,
+    BlobVMService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@ import { NotifyService } from '../services/notify.service';
 import { LoggerService } from '../../agio-core';
 
 @Injectable()
-export class PersonasVMService {
+export class BlobVMService {
   private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
   private listado: Array<any> = [];
   private elemento: any = {};
@@ -20,10 +20,10 @@ export class PersonasVMService {
     this.modo = 'list';
     if (this.listado.length === 0 ) {
       this.listado = [
-        { id: 1, nombre: 'Carmelo', apellidos: 'Coton', edad: 34},
-        { id: 2, nombre: 'Pepito', apellidos: 'Grillo', edad: 155},
-        { id: 3, nombre: 'Pedro', apellidos: 'Pica Piedra', edad: 50},
-        { id: 4, nombre: 'Pablo', apellidos: 'Marmol', edad: 18},
+        { id: 1, titulo: 'Carmelo', texto: 'Coton', autor: 'Sar', fecha: '', megusta: 0, fotoUrl: ''},
+        { id: 2, titulo: 'CC', texto: 'Grillo', autor: 'QQ', fecha: '', megusta: 0, fotoUrl: ''},
+        { id: 3, titulo: 'XX', texto: 'Pica Piedra', autor: 'ZZ', fecha: '', megusta: 0, fotoUrl: ''},
+        { id: 4, titulo: 'AA', texto: 'Marmol', autor: 'CC', fecha: '', megusta: 0, fotoUrl: ''},
       ];
     }
   }
