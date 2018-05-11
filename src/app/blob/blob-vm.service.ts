@@ -20,10 +20,10 @@ export class BlobVMService {
     this.modo = 'list';
     if (this.listado.length === 0 ) {
       this.listado = [
-        { id: 1, titulo: 'Carmelo', texto: 'Coton', autor: 'Sar', fecha: '', megusta: 0, fotoUrl: ''},
-        { id: 2, titulo: 'CC', texto: 'Grillo', autor: 'QQ', fecha: '', megusta: 0, fotoUrl: ''},
-        { id: 3, titulo: 'XX', texto: 'Pica Piedra', autor: 'ZZ', fecha: '', megusta: 0, fotoUrl: ''},
-        { id: 4, titulo: 'AA', texto: 'Marmol', autor: 'CC', fecha: '', megusta: 0, fotoUrl: ''},
+        { id: 1, titulo: 'Carmelo', texto: 'Coton', autor: 'Sar', fecha: '11/05/1992', megusta: 1, fotoUrl: '../../favicon.ico'},
+        { id: 2, titulo: 'CC', texto: 'Grillo', autor: 'QQ', fecha: '16/05/1998', megusta: 10, fotoUrl: '../../favicon.ico'},
+        { id: 3, titulo: 'XX', texto: 'Pica Piedra', autor: 'ZZ', fecha: '13/05/1992', megusta: 0, fotoUrl: '../../favicon.ico'},
+        { id: 4, titulo: 'AA', texto: 'Marmol', autor: 'CC', fecha: '281/05/1996', megusta: 0, fotoUrl: '../../favicon.ico'},
       ];
     }
   }
