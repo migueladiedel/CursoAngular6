@@ -1,0 +1,8 @@
+<h1>Blog <input class="btn btn-link" type="button" value="Añadir" (click)="VM.add()"></h1>
+<section *ngFor="let item of VM.Listado">
+  <header><h2><input type="button" value="{{item.titulo}}" (click)="VM.view(item.id)" class="btn btn-link"></h2></header>
+  <article>{{item.texto}}</article>
+  <footer>
+    <input type="button" value="Leer mas" (click)="VM.view(item.id)" class="btn btn-link">
+  </footer>
+</section>

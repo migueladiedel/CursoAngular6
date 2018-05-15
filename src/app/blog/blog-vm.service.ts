@@ -3,7 +3,7 @@ import { NotifyService } from '../services/notify.service';
 import { LoggerService } from '../../agio-core';
 
 @Injectable()
-export class BlobVMService {
+export class BlogVMService {
   private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
   private listado: Array<any> = [];
   private elemento: any = {};
@@ -20,10 +20,26 @@ export class BlobVMService {
     this.modo = 'list';
     if (this.listado.length === 0 ) {
       this.listado = [
-        { id: 1, titulo: 'Carmelo', texto: 'Coton', autor: 'Sar', fecha: '11/05/1992', megusta: 1, fotoUrl: '../../favicon.ico'},
-        { id: 2, titulo: 'CC', texto: 'Grillo', autor: 'QQ', fecha: '16/05/1998', megusta: 10, fotoUrl: '../../favicon.ico'},
-        { id: 3, titulo: 'XX', texto: 'Pica Piedra', autor: 'ZZ', fecha: '13/05/1992', megusta: 0, fotoUrl: '../../favicon.ico'},
-        { id: 4, titulo: 'AA', texto: 'Marmol', autor: 'CC', fecha: '281/05/1996', megusta: 0, fotoUrl: '../../favicon.ico'},
+        {
+              'id': 1,
+              'titulo': 'Saludo',
+              // tslint:disable-next-line:max-line-length
+              'texto': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores eveniet eum nisi expedita ab dolorum labore similique provident officia ipsa, aliquam recusandae dicta id, praesentium quasi consequatur minus laborum perferendis?',
+              'autor': 'Javier',
+              'fecha': '2016-02-29',
+              'megusta': 0,
+              'fotourl': 'https://angular.io/assets/images/logos/angular/logo-nav@2x.png'
+          },
+          {
+              'id': 2,
+              'titulo': 'Angular 4.3 Now Available',
+              // tslint:disable-next-line:max-line-length
+              'texto': '<p>Angular version 4.3 has been released. This is a minor release following our announced adoption of Semantic Versioning, meaning that it contains no breaking changes and that it is a drop-in replacement for 4.x.x.</p><h2>What’s new?</h2><ul><li>We are introducing HttpClient, a smaller, easier to use, and more powerful library for making HTTP Requests. Learn more about it from our docs.</li><li>New router life cycle events for Guards and Resolvers. Four new events: GuardsCheckStart, GuardsCheckEnd, ResolveStart, ResolveEnd join the existing set of life cycle event such as NavigationStart.</li><li>Conditionally disable animations via a new attribute, [@.disabled]</li><li>Support for the emulated /deep/ CSS Selector (the Shadow-Piercing descendant combinator aka >>>) has been deprecated to match browser implementations and Chrome’s intent to remove. ::ng-deep has been added to provide a temporary workaround for developers currently using this feature.</li></ul>',
+              'autor': 'Stephen Fluin',
+              'fecha': '2017-07-18',
+              'megusta': 0,
+              'fotourl': 'https://angular.io/assets/images/logos/angular/logo-nav@2x.png'
+          }
       ];
     }
   }

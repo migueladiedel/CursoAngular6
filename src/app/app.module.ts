@@ -11,8 +11,9 @@ import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { DinamicosComponent } from './dinamicos/dinamicos.component';
 import { PERSONAS_COMPONENT } from './personas/personas.component';
 import { PersonasVMService } from './personas/personas-vm.service';
-import { BLOB_COMPONENT } from './blob/blob.component';
-import { BlobVMService } from './blob/blob-vm.service';
+import { BLOG_COMPONENT } from './blog/blog.component';
+import { BlogVMService } from './blog/blog-vm.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,18 +24,20 @@ import { BlobVMService } from './blob/blob-vm.service';
     CalculadoraComponent,
     DinamicosComponent,
     PERSONAS_COMPONENT,
-    BLOB_COMPONENT
+    BLOG_COMPONENT,
+    
 
   ],
   imports: [
     BrowserModule, FormsModule,
     AgioCoreModule,
+    NgbModule.forRoot(),
   ],
   providers: [
     LoggerService,
     {provide: ERROR_LEVEL, useValue: 4 },
     PersonasVMService,
-    BlobVMService
+    BlogVMService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BlobComponent } from './blob.component';
+import { BlobComponent } from './blog.component';
 
 describe('BlobComponent', () => {
   let component: BlobComponent;

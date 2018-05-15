@@ -1,0 +1,12 @@
+<img *ngIf="VM.Elemento.fotourl" [src]="VM.Elemento.fotourl">
+<h1>{{VM.Elemento.titulo}}&nbsp;
+    <input type="button" value="Editar" (click)="VM.edit(VM.Elemento.id)" class="btn btn-link"> |&nbsp;
+    <input type="button" value="Borrar" (click)="VM.remove(VM.Elemento.id)" class="btn btn-link"></h1>
+<p>
+  <i>{{VM.Elemento.autor}}</i><br>
+  <i>{{VM.Elemento.fecha | date:'dd/MM/yyyy'}}</i>
+</p>
+<div [innerHTML]="VM.Elemento.texto"></div>
+<p>
+  <input type="button" value="Volver" (click)="VM.cancel()" class="btn btn-link">
+</p>

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { BlobVMService } from './blob-vm.service';
+import { BlobVMService } from './blog-vm.service';
 
 describe('PersonasVMService', () => {
   beforeEach(() => {
