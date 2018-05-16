@@ -10,7 +10,9 @@ export class BlogVMService {
   private idOriginal = null;
   protected pk = 'id';
 
-  constructor(private nsrv: NotifyService, private out: LoggerService) { }
+  constructor(private nsrv: NotifyService, private out: LoggerService) {
+    // super(nsrv, out, 'id');
+  }
 
   public get Modo() { return this.modo; }
   public get Listado() { return this.listado; }

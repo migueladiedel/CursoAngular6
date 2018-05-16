@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoggerService } from '../../agio-core';
+import { Subject } from 'rxjs';
 
 type TipoError = 'error' | 'warn' | 'log';
 
@@ -17,13 +18,15 @@ export class Notify {
 })
 export class NotifyService {
   private listado: Array<Notify> = [];
-
+  private notificacion = new Subject<string>();
   constructor(private con: LoggerService) { }
 
   public get Listado() { return this.listado; }
+  public get Notificacion() { return this.notificacion; }
 
   public add(msg: string, tipo: TipoError = 'error'): void {
     this.listado.push({Mensaje: msg, Tipo: tipo});
+    this.notificacion.next(msg);
     if (tipo === 'error') {
       this.con.error(msg);
     }

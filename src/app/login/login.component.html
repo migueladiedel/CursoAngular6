@@ -1,0 +1,8 @@
+<form #miForm="ngForm" *ngIf="!login.isAutenticated">
+  <input type="text" [(ngModel)]="txtUsuario" required minlength="4" placeholder="Usuario" [ngModelOptions]="{standalone: true}">
+  <input type="password" [(ngModel)]="txtPassword" required minlength="4" placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
+  <input type="button" [disabled]="miForm.invalid" value="Enviar" (click)="logInOut()">
+</form>
+<span *ngIf="login.isAutenticated">
+ Hola  <input type="button" value="Desconectar" (click)="logInOut()">
+</span>

@@ -8,7 +8,9 @@ import { NotifyService } from '../services/notify.service';
 })
 export class PopUpComponent implements OnInit {
 
-  constructor(public srv: NotifyService) { }
+  constructor(public srv: NotifyService) {
+    srv.Notificacion.subscribe( msg => window.alert(msg));
+  }
 
   ngOnInit() {
   }

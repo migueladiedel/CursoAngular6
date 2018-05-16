@@ -1,6 +1,149 @@
 import { Injectable } from '@angular/core';
 import { NotifyService } from '../services/notify.service';
 import { LoggerService } from '../../agio-core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+@Injectable( {providedIn: 'root'})
+export class PersonasDAOService {
+  private baseUrl = environment.WSUrl + 'personas';
+  private options = { withCredentials: true };
+
+  constructor(private http: HttpClient) {}
+  query(): Observable<any> {
+    return this.http.get(this.baseUrl, this.options);
+  }
+  get(id: number) {
+    return this.http.get(this.baseUrl + '/' + id, this.options);
+  }
+  add(item: any) {
+    return this.http.post(this.baseUrl, item, this.options);
+  }
+  change(item: any) {
+    return this.http.put(this.baseUrl, item, this.options);
+  }
+  remove(id: number) {
+    return this.http.delete(this.baseUrl + '/' + id, this.options);
+  }
+}
+@Injectable()
+export class PersonasDAOVMService {
+  private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
+  private listado: Array<any> = [];
+  private elemento: any = {};
+  private idOriginal = null;
+  protected pk = 'id';
+
+  constructor(
+    private dao: PersonasDAOService,
+    private nsrv: NotifyService,
+    private out: LoggerService
+  ) {}
+
+  public get Modo() {
+    return this.modo;
+  }
+  public get Listado() {
+    return this.listado;
+  }
+  public get Elemento() {
+    return this.elemento;
+  }
+
+  public list() {
+    this.dao.query().subscribe(
+      data => {
+        this.listado = data;
+        this.modo = 'list';
+      },
+      error => {
+        this.nsrv.add(error.message);
+      }
+    );
+  }
+
+  public add() {
+    this.modo = 'add';
+    this.elemento = { id: 0 };
+  }
+
+  public edit(key: any) {
+    this.dao.get(key).subscribe(
+      data => {
+        this.modo = 'edit';
+        this.elemento = data;
+        this.idOriginal = key;
+      },
+      error => {
+        this.nsrv.add(error.message);
+      }
+    );
+  }
+
+  public view(key: any) {
+    this.dao.get(key).subscribe(
+      data => {
+        this.modo = 'view';
+        this.elemento = data;
+      },
+      error => {
+        this.nsrv.add(error.message);
+      }
+    );
+  }
+
+  public remove(key: any) {
+    if (!window.confirm('¿Seguro?')) {
+      return;
+    }
+    this.dao.remove(key).subscribe(
+      data => {
+        this.list();
+      },
+      error => {
+        this.nsrv.add(error.message);
+      }
+    );
+  }
+
+  public cancel() {
+    this.elemento = {};
+    this.idOriginal = null;
+    this.list();
+  }
+
+  public send() {
+    switch (this.modo) {
+      case 'add':
+        this.dao.add(this.elemento).subscribe(
+          data => {
+            this.cancel();
+          },
+          error => {
+            this.nsrv.add(error.message);
+          }
+        );
+        this.listado.push(this.elemento);
+        this.cancel();
+        break;
+      case 'edit':
+        // tslint:disable-next-line:triple-equals
+        this.dao.change(this.elemento).subscribe(
+          data => {
+            this.cancel();
+          },
+          error => {
+            this.nsrv.add(error.message);
+          }
+        );
+        break;
+      case 'view':
+        this.cancel();
+        break;
+    }
+  }
+}
 
 @Injectable()
 export class PersonasVMService {
@@ -10,20 +153,26 @@ export class PersonasVMService {
   private idOriginal = null;
   protected pk = 'id';
 
-  constructor(private nsrv: NotifyService, private out: LoggerService) { }
+  constructor(private nsrv: NotifyService, private out: LoggerService) {}
 
-  public get Modo() { return this.modo; }
-  public get Listado() { return this.listado; }
-  public get Elemento() { return this.elemento; }
+  public get Modo() {
+    return this.modo;
+  }
+  public get Listado() {
+    return this.listado;
+  }
+  public get Elemento() {
+    return this.elemento;
+  }
 
   public list() {
     this.modo = 'list';
-    if (this.listado.length === 0 ) {
+    if (this.listado.length === 0) {
       this.listado = [
-        { id: 1, nombre: 'Carmelo', apellidos: 'Coton', edad: 34},
-        { id: 2, nombre: 'Pepito', apellidos: 'Grillo', edad: 155},
-        { id: 3, nombre: 'Pedro', apellidos: 'Pica Piedra', edad: 50},
-        { id: 4, nombre: 'Pablo', apellidos: 'Marmol', edad: 18},
+        { id: 1, nombre: 'Carmelo', apellidos: 'Coton', edad: 34 },
+        { id: 2, nombre: 'Pepito', apellidos: 'Grillo', edad: 155 },
+        { id: 3, nombre: 'Pedro', apellidos: 'Pica Piedra', edad: 50 },
+        { id: 4, nombre: 'Pablo', apellidos: 'Marmol', edad: 18 }
       ];
     }
   }
@@ -57,7 +206,9 @@ export class PersonasVMService {
   }
 
   public remove(key: any) {
-    if (!window.confirm('¿Seguro?')) { return; }
+    if (!window.confirm('¿Seguro?')) {
+      return;
+    }
     // tslint:disable-next-line:triple-equals
     const indice = this.listado.findIndex(item => item[this.pk] == key);
     if (indice !== -1) {
@@ -81,19 +232,21 @@ export class PersonasVMService {
         this.cancel();
         break;
       case 'edit':
+        // tslint:disable-next-line:triple-equals
+        const indice = this.listado.findIndex(
           // tslint:disable-next-line:triple-equals
-          const indice = this.listado.findIndex(item => item[this.pk] == this.idOriginal);
-          if (indice !== -1) {
-            this.listado[indice] = this.elemento;
-            this.list();
-          } else {
-            this.nsrv.add('Elemento no encontrdo.');
-          }
-          break;
+          item => item[this.pk] == this.idOriginal
+        );
+        if (indice !== -1) {
+          this.listado[indice] = this.elemento;
+          this.list();
+        } else {
+          this.nsrv.add('Elemento no encontrdo.');
+        }
+        break;
       case 'view':
-          this.cancel();
-          break;
+        this.cancel();
+        break;
     }
   }
-
 }

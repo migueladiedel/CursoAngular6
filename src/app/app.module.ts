@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AgioCoreModule, LoggerService, ERROR_LEVEL } from '../agio-core';
 
@@ -10,10 +11,12 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { DinamicosComponent } from './dinamicos/dinamicos.component';
 import { PERSONAS_COMPONENT } from './personas/personas.component';
-import { PersonasVMService } from './personas/personas-vm.service';
+import { PersonasVMService, PersonasDAOVMService } from './personas/personas-vm.service';
 import { BLOG_COMPONENT } from './blog/blog.component';
 import { BlogVMService } from './blog/blog-vm.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthInterceptor, LoggingInterceptor } from './services/seguridad.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,21 +26,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PopUpComponent,
     CalculadoraComponent,
     DinamicosComponent,
-    PERSONAS_COMPONENT,
-    BLOG_COMPONENT,
-    
-
+    PERSONAS_COMPONENT, BLOG_COMPONENT, LoginComponent,
   ],
   imports: [
-    BrowserModule, FormsModule,
+    BrowserModule, FormsModule, HttpClientModule,
     AgioCoreModule,
     NgbModule.forRoot(),
   ],
   providers: [
     LoggerService,
     {provide: ERROR_LEVEL, useValue: 4 },
-    PersonasVMService,
-    BlogVMService
+    BlogVMService,
+    {provide: PersonasVMService, useClass: PersonasDAOVMService},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

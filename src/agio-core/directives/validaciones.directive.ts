@@ -86,7 +86,7 @@ export class MaxValidator implements Validator,
   ngOnChanges(changes: SimpleChanges): void {
     if ('max' in changes) {
       this._createValidator();
-      if (this._onChange) this._onChange();
+      if (this._onChange) { this._onChange(); }
     }
   }
 
