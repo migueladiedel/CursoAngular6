@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AgioCoreModule, LoggerService, ERROR_LEVEL } from '../agio-core';
+import {RouterModule} from '@angular/router';
+import {routes} from './app.routes';
+import { AuthInterceptor, LoggingInterceptor } from './services/seguridad.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,8 +18,10 @@ import { PersonasVMService, PersonasDAOVMService } from './personas/personas-vm.
 import { BLOG_COMPONENT } from './blog/blog.component';
 import { BlogVMService } from './blog/blog-vm.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthInterceptor, LoggingInterceptor } from './services/seguridad.service';
 import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MenuComponent } from './menu/menu.component';
+
 
 @NgModule({
   declarations: [
@@ -26,10 +31,10 @@ import { LoginComponent } from './login/login.component';
     PopUpComponent,
     CalculadoraComponent,
     DinamicosComponent,
-    PERSONAS_COMPONENT, BLOG_COMPONENT, LoginComponent,
+    PERSONAS_COMPONENT, BLOG_COMPONENT, LoginComponent, PageNotFoundComponent, MenuComponent,
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule,
+    BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(routes),
     AgioCoreModule,
     NgbModule.forRoot(),
   ],
