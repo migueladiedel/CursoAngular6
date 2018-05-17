@@ -1,32 +1,53 @@
 <form #miForm="ngForm">
   <dl>
-    <dt [class.errorMsg]="id.invalid">Código:</dt>
-    <dd>
-      <input type="number" name="id" id="id" [(ngModel)]="VM.Elemento.id" #id="ngModel" required>
-      <span class="errorMsg" [hidden]="id.hasError('required') && miForm.pristine">Es obligatorio.</span>
-    </dd>
-    <dt [class.errorMsg]="nombre.invalid">Nombre:</dt>
-    <dd>
-        <input type="text" name="nombre" id="nombre" [(ngModel)]="VM.Elemento.nombre" #nombre="ngModel"
-        required minlength="2" maxlength="10">
-        <span class="errorMsg" [hidden]="!nombre.errors?.required && miForm.pristine">Es obligatorio.</span>
-        <span class="errorMsg" [hidden]="!nombre.errors?.minlength && !nombre.errors?.maxlength">Debe de tener entre 2 y 10 caracteres.</span>
-    </dd>
-    <dt [class.errorMsg]="apellidos.invalid">Apellidos:</dt>
-    <dd>
-        <input type="text" name="apellidos" id="apellidos" [(ngModel)]="VM.Elemento.apellidos" #apellidos="ngModel"
-        minlength="2" maxlength="10">
-        <span class="errorMsg" [hidden]="!apellidos.errors?.minlength && !apellidos.errors?.maxlength">Debe de tener entre 2 y 10 caracteres.</span>
-    </dd>
-    <dt [class.errorMsg]="edad.invalid">Edad:</dt>
-    <dd>
-        <input type="number" name="edad" id="edad" [(ngModel)]="VM.Elemento.edad" #edad="ngModel"
-        minlength="18" maxlength="67">
-        <span class="errorMsg" [hidden]="!edad.errors?.minlength && !edad.errors?.maxlength">Debe de tener entre 18 y 67 años.</span>
-    </dd>
-  </dl>
-  <p>
-    <input type="button" value="Enviar" (click)="VM.send()" [disabled]="miForm.invalid">
-    <input type="button" value="Volver" (click)="VM.cancel()">
-  </p>
-</form>
+      <dt>Código:</dt>
+      <dd *ngIf="VM.Modo === 'add'">
+        <input type="number" name="id" id="id" [(ngModel)]="VM.Elemento.id" #id="ngModel"
+          required>
+        <span class="errorMsg" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio.</span>
+      </dd>
+      <dd *agioUnless="VM.Modo === 'add'">
+        {{VM.Elemento.id}}
+      </dd>
+      <dt [class.errorMsg]="nombre.invalid">Nombre:</dt>
+      <dd>
+          <input type="text" name="nombre" id="nombre" [(ngModel)]="VM.Elemento.nombre" #nombre="ngModel"
+            required minlength="2" maxlength="10">
+          <span class="errorMsg" [hidden]="!nombre.errors?.required">Es obligatorio.</span>
+          <span class="errorMsg" [hidden]="!nombre.errors?.minlength && !nombre.errors?.maxlength">
+            Debe tener entre 2 y 10 caracteres.
+          </span>
+      </dd>
+      <dt>Apellidos:</dt>
+      <dd>
+          <input type="email" name="apellidos" id="apellidos" [(ngModel)]="VM.Elemento.apellidos" #apellidos="ngModel"
+            minlength="2" maxlength="10" valnif>{{ apellidos.errors | json }}
+          <span class="errorMsg" [hidden]="!apellidos.errors?.minlength && !apellidos.errors?.maxlength">
+              Debe tener entre 2 y 10 caracteres.
+          </span>
+          <span class="errorMsg" [hidden]="!apellidos.errors?.upperCase">
+              Tiene que estar en mayúsculas.
+          </span>
+          </dd>
+      <dt>Edad:</dt>
+      <dd>
+          <input type="number" name="edad" id="edad" [(ngModel)]="VM.Elemento.edad" #edad="ngModel"
+            min="18" max="67" naturalNumber> {{ edad.errors | json }}
+          <span class="errorMsg" [hidden]="!edad.errors?.min && !edad.errors?.max">
+              Debe estar entre 18 y 67 años.
+          </span>
+        </dd>
+        <dt>Dni:</dt>
+      <dd>
+          <input type="text" name="dni" id="dni" [(ngModel)]="VM.Elemento.dni" #dni="ngModel"
+          NifValidator>
+          <span class="errorMsg" [hidden]="!dni.errors?.NifValidator">
+             Nif no es válido
+          </span>
+        </dd>
+    </dl>
+    <p>
+        <input type="button" value="Enviar" (click)="VM.send()" [disabled]="miForm.invalid">
+        <input type="button" value="Volver" (agioWinConfirm)="VM.cancel()" agioWinConfirmMessage="¿Estás seguro?">
+    </p>
+  </form>

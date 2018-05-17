@@ -1,3 +1,7 @@
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import localeEsExtra from '@angular/common/locales/extra/es';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -5,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { AgioCoreModule, LoggerService, ERROR_LEVEL } from '../agio-core';
 import {RouterModule} from '@angular/router';
 import {routes} from './app.routes';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { PersonasVMService, PersonasDAOVMService } from './personas/personas-vm.service';
 import { AuthInterceptor, LoggingInterceptor } from './services/seguridad.service';
 
 import { AppComponent } from './app.component';
@@ -14,10 +21,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { DinamicosComponent } from './dinamicos/dinamicos.component';
 import { PERSONAS_COMPONENT } from './personas/personas.component';
-import { PersonasVMService, PersonasDAOVMService } from './personas/personas-vm.service';
 import { BLOG_COMPONENT } from './blog/blog.component';
 import { BlogVMService } from './blog/blog-vm.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MenuComponent } from './menu/menu.component';
@@ -34,17 +39,17 @@ import { MenuComponent } from './menu/menu.component';
     PERSONAS_COMPONENT, BLOG_COMPONENT, LoginComponent, PageNotFoundComponent, MenuComponent,
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(routes),
+    BrowserModule, FormsModule, HttpClientModule,
+    RouterModule.forRoot(routes),
     AgioCoreModule,
-    NgbModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [
     LoggerService,
-    {provide: ERROR_LEVEL, useValue: 4 },
-    BlogVMService,
-    {provide: PersonasVMService, useClass: PersonasDAOVMService},
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
+    { provide: ERROR_LEVEL, useValue: 4 },
+    { provide: PersonasVMService, useClass: PersonasDAOVMService },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true, },
   ],
   bootstrap: [AppComponent]
 })

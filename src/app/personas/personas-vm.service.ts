@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import { NotifyService } from '../services/notify.service';
 import { LoggerService } from '../../agio-core';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
-@Injectable( {providedIn: 'root'})
+@Injectable({providedIn: 'root'})
 export class PersonasDAOService {
   private baseUrl = environment.WSUrl + 'personas';
   private options = { withCredentials: true };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   query(): Observable<any> {
     return this.http.get(this.baseUrl, this.options);
   }
   get(id: number) {
     return this.http.get(this.baseUrl + '/' + id, this.options);
   }
-  add(item: any) {
+  add(item: any)  {
     return this.http.post(this.baseUrl, item, this.options);
   }
   change(item: any) {
@@ -27,6 +28,7 @@ export class PersonasDAOService {
     return this.http.delete(this.baseUrl + '/' + id, this.options);
   }
 }
+
 @Injectable()
 export class PersonasDAOVMService {
   private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
@@ -34,22 +36,14 @@ export class PersonasDAOVMService {
   private elemento: any = {};
   private idOriginal = null;
   protected pk = 'id';
+  protected urllist = '/personas';
 
-  constructor(
-    private dao: PersonasDAOService,
-    private nsrv: NotifyService,
-    private out: LoggerService
-  ) {}
+  constructor(private dao: PersonasDAOService, private nsrv: NotifyService,
+    private out: LoggerService, private router: Router) { }
 
-  public get Modo() {
-    return this.modo;
-  }
-  public get Listado() {
-    return this.listado;
-  }
-  public get Elemento() {
-    return this.elemento;
-  }
+  public get Modo() { return this.modo; }
+  public get Listado() { return this.listado; }
+  public get Elemento() { return this.elemento; }
 
   public list() {
     this.dao.query().subscribe(
@@ -57,9 +51,7 @@ export class PersonasDAOVMService {
         this.listado = data;
         this.modo = 'list';
       },
-      error => {
-        this.nsrv.add(error.message);
-      }
+      error => { this.nsrv.add(error.message); }
     );
   }
 
@@ -74,10 +66,8 @@ export class PersonasDAOVMService {
         this.modo = 'edit';
         this.elemento = data;
         this.idOriginal = key;
-      },
-      error => {
-        this.nsrv.add(error.message);
-      }
+        },
+      error => { this.nsrv.add(error.message); }
     );
   }
 
@@ -86,56 +76,38 @@ export class PersonasDAOVMService {
       data => {
         this.modo = 'view';
         this.elemento = data;
-      },
-      error => {
-        this.nsrv.add(error.message);
-      }
+        },
+      error => { this.nsrv.add(error.message); }
     );
   }
 
   public remove(key: any) {
-    if (!window.confirm('¿Seguro?')) {
-      return;
-    }
+    if (!window.confirm('¿Seguro?')) { return; }
     this.dao.remove(key).subscribe(
-      data => {
-        this.list();
-      },
-      error => {
-        this.nsrv.add(error.message);
-      }
+      data => { this.list(); },
+      error => { this.nsrv.add(error.message); }
     );
   }
 
   public cancel() {
     this.elemento = {};
     this.idOriginal = null;
-    this.list();
+    // this.list();
+    this.router.navigateByUrl(this.urllist);
   }
 
   public send() {
     switch (this.modo) {
       case 'add':
         this.dao.add(this.elemento).subscribe(
-          data => {
-            this.cancel();
-          },
-          error => {
-            this.nsrv.add(error.message);
-          }
+          data => { this.cancel(); },
+          error => { this.nsrv.add(error.message); }
         );
-        this.listado.push(this.elemento);
-        this.cancel();
         break;
       case 'edit':
-        // tslint:disable-next-line:triple-equals
         this.dao.change(this.elemento).subscribe(
-          data => {
-            this.cancel();
-          },
-          error => {
-            this.nsrv.add(error.message);
-          }
+          data => { this.cancel(); },
+          error => { this.nsrv.add(error.message); }
         );
         break;
       case 'view':
@@ -143,6 +115,7 @@ export class PersonasDAOVMService {
         break;
     }
   }
+
 }
 
 @Injectable()
@@ -153,26 +126,20 @@ export class PersonasVMService {
   private idOriginal = null;
   protected pk = 'id';
 
-  constructor(private nsrv: NotifyService, private out: LoggerService) {}
+  constructor(private nsrv: NotifyService, private out: LoggerService) { }
 
-  public get Modo() {
-    return this.modo;
-  }
-  public get Listado() {
-    return this.listado;
-  }
-  public get Elemento() {
-    return this.elemento;
-  }
+  public get Modo() { return this.modo; }
+  public get Listado() { return this.listado; }
+  public get Elemento() { return this.elemento; }
 
   public list() {
     this.modo = 'list';
-    if (this.listado.length === 0) {
+    if (this.listado.length === 0 ) {
       this.listado = [
-        { id: 1, nombre: 'Carmelo', apellidos: 'Coton', edad: 34 },
-        { id: 2, nombre: 'Pepito', apellidos: 'Grillo', edad: 155 },
-        { id: 3, nombre: 'Pedro', apellidos: 'Pica Piedra', edad: 50 },
-        { id: 4, nombre: 'Pablo', apellidos: 'Marmol', edad: 18 }
+        { id: 1, nombre: 'Carmelo', apellidos: 'Coton', edad: 34},
+        { id: 2, nombre: 'Pepito', apellidos: 'Grillo', edad: 155},
+        { id: 3, nombre: 'Pedro', apellidos: 'Pica Piedra', edad: 50},
+        { id: 4, nombre: 'Pablo', apellidos: 'Marmol', edad: 18},
       ];
     }
   }
@@ -190,7 +157,7 @@ export class PersonasVMService {
       this.elemento = Object.assign({}, rslt);
       this.idOriginal = key;
     } else {
-      this.nsrv.add('Elemento no encontrdo.');
+      this.nsrv.add('encontrado');
     }
   }
 
@@ -201,21 +168,19 @@ export class PersonasVMService {
       this.modo = 'view';
       this.elemento = Object.assign({}, rslt);
     } else {
-      this.nsrv.add('Elemento no encontrdo.');
+      this.nsrv.add('encontrado');
     }
   }
 
   public remove(key: any) {
-    if (!window.confirm('¿Seguro?')) {
-      return;
-    }
+    if (!window.confirm('¿Seguro?')) { return; }
     // tslint:disable-next-line:triple-equals
     const indice = this.listado.findIndex(item => item[this.pk] == key);
     if (indice !== -1) {
       this.listado.splice(indice, 1);
       this.list();
     } else {
-      this.nsrv.add('Elemento no encontrdo.');
+      this.nsrv.add('encontrado');
     }
   }
 
@@ -232,21 +197,19 @@ export class PersonasVMService {
         this.cancel();
         break;
       case 'edit':
-        // tslint:disable-next-line:triple-equals
-        const indice = this.listado.findIndex(
           // tslint:disable-next-line:triple-equals
-          item => item[this.pk] == this.idOriginal
-        );
-        if (indice !== -1) {
-          this.listado[indice] = this.elemento;
-          this.list();
-        } else {
-          this.nsrv.add('Elemento no encontrdo.');
-        }
-        break;
+          const indice = this.listado.findIndex(item => item[this.pk] == this.idOriginal);
+          if (indice !== -1) {
+            this.listado[indice] = this.elemento;
+            this.list();
+          } else {
+            this.nsrv.add('encontrado');
+          }
+          break;
       case 'view':
-        this.cancel();
-        break;
+          this.cancel();
+          break;
     }
   }
+
 }

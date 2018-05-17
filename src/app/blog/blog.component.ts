@@ -21,7 +21,7 @@ export class BlogComponent implements OnInit {
   templateUrl: './tmpl-list.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlobListComponent implements OnInit {
+export class BlogListComponent implements OnInit {
 
   constructor(private vm: BlogVMService) { }
   public get VM() { return this.vm; }
@@ -36,7 +36,7 @@ export class BlobListComponent implements OnInit {
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlobAddComponent implements OnInit {
+export class BlogAddComponent implements OnInit {
 
   constructor(private vm: BlogVMService) { }
   public get VM() { return this.vm; }
@@ -51,7 +51,7 @@ export class BlobAddComponent implements OnInit {
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlobEditComponent implements OnInit {
+export class BlogEditComponent implements OnInit {
 
   constructor(private vm: BlogVMService) { }
   public get VM() { return this.vm; }
@@ -66,7 +66,7 @@ export class BlobEditComponent implements OnInit {
   templateUrl: './tmpl-view.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlobViewComponent implements OnInit {
+export class BlogViewComponent implements OnInit {
 
   constructor(private vm: BlogVMService) { }
   public get VM() { return this.vm; }
@@ -76,5 +76,5 @@ export class BlobViewComponent implements OnInit {
 
 }
 
-export const BLOG_COMPONENT = [BlogComponent, BlobListComponent, BlobAddComponent,
-  BlobEditComponent, BlobViewComponent, ];
+export const BLOG_COMPONENT = [BlogComponent, BlogListComponent, BlogAddComponent,
+  BlogEditComponent, BlogViewComponent, ];
