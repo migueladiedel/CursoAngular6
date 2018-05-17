@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/seguridad.service';
 import { NotifyService } from '../services/notify.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
